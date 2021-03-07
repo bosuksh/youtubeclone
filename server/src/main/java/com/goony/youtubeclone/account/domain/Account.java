@@ -2,17 +2,14 @@ package com.goony.youtubeclone.account.domain;
 
 import com.goony.youtubeclone.common.domain.BaseEntity;
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Entity @AllArgsConstructor @NoArgsConstructor
-@Getter @Builder
+@Getter @Builder @EqualsAndHashCode(of = "id")
 public class Account extends BaseEntity{
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +24,8 @@ public class Account extends BaseEntity{
   private String password;
 
   private String name;
+
+  @Enumerated(value = EnumType.STRING)
+  private AccountRole accountRole;
 
 }
