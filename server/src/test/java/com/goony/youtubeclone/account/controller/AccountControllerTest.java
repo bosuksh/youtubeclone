@@ -1,16 +1,21 @@
 package com.goony.youtubeclone.account.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.goony.youtubeclone.account.domain.Account;
 import com.goony.youtubeclone.account.dto.AccountRequestDto;
+import com.goony.youtubeclone.account.service.AccountService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -20,6 +25,9 @@ class AccountControllerTest {
 
   @Autowired
   MockMvc mockMvc;
+
+  @MockBean
+  AccountService accountService;
 
   @Autowired
   ObjectMapper objectMapper;
@@ -33,6 +41,13 @@ class AccountControllerTest {
                                      .password("123")
                                      .name("example")
                                      .build();
+    Account account = Account.builder()
+                        .id(1L)
+                        .name(requestDto.getName())
+                        .password(requestDto.getPassword())
+                        .email(requestDto.getEmail())
+                        .build();
+    given(accountService.createAccount(any())).willReturn(account);
     //when
     mockMvc.perform(post("/api/account")
       .content(objectMapper.writeValueAsString(requestDto))

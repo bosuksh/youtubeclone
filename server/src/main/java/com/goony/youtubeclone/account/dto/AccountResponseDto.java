@@ -10,16 +10,12 @@ import javax.validation.constraints.NotBlank;
 
 @Getter @Builder
 @AllArgsConstructor @NoArgsConstructor
-public class AccountRequestDto {
+public class AccountResponseDto {
 
-  @Email
-  @NotBlank
+  private Long id;
+
   private String email;
 
-  @NotBlank
-  private String password;
-
-  @NotBlank
   private String name;
 
 }
