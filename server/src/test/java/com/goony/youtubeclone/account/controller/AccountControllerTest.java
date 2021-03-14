@@ -61,4 +61,5 @@ class AccountControllerTest {
     .andExpect(jsonPath("name").exists())
     .andExpect(jsonPath("password").doesNotExist());
   }
+
 }
