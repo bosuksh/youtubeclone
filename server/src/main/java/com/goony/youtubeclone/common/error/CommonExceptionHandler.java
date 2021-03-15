@@ -14,6 +14,7 @@ public class CommonExceptionHandler {
 
   @ExceptionHandler(value = UserDuplicatedException.class)
   protected ResponseEntity<ErrorResponse> handleUserDuplicatedException(UserDuplicatedException ex) {
+    log.error("Email is Duplicated");
     ErrorResponse response = ErrorResponse.of(ErrorCode.USER_DUPLICATED);
     return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
   }
