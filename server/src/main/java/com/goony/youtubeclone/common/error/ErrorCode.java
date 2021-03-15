@@ -1,5 +1,11 @@
 package com.goony.youtubeclone.common.error;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum ErrorCode {
   //공통 에러 코드
   INVALID_INPUT_VALUE(400, "C001", "Invalid Input Value"),
@@ -9,25 +15,8 @@ public enum ErrorCode {
   INVALID_TYPE_VALUE(400, "C005", "Invalid Type Value"),
   HANDLE_ACCESS_DENIED(403, "C006", "Access is  Denied");
 
+  private int status;
   private final String code;
   private final String message;
-  private int status;
 
-  ErrorCode(int status, String code, String message) {
-    this.code = code;
-    this.message = message;
-    this.status = status;
-  }
-
-  public String getCode() {
-    return code;
-  }
-
-  public String getMessage() {
-    return message;
-  }
-
-  public int getStatus() {
-    return status;
-  }
 }
