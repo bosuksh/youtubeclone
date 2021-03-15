@@ -20,7 +20,7 @@ public class Account extends BaseEntity {
   private Long id;
 
   @Column(unique = true)
-  @NotBlank @Email
+  @NotNull @NotBlank @Email
   private String email;
 
   @NotNull
