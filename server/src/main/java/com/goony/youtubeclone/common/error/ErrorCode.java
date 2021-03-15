@@ -13,7 +13,11 @@ public enum ErrorCode {
   ENTITY_NOT_FOUND(400, "CO03", "Entity Not Found"),
   INTERNAL_SERVER_ERROR(500, "C004", "Internal Server Error"),
   INVALID_TYPE_VALUE(400, "C005", "Invalid Type Value"),
-  HANDLE_ACCESS_DENIED(403, "C006", "Access is  Denied");
+  HANDLE_ACCESS_DENIED(403, "C006", "Access is  Denied"),
+
+
+  //account
+  USER_DUPLICATED(400, "A001", "Email is Duplicated");
 
   private int status;
   private final String code;

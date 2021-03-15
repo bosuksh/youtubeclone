@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
+import java.util.Set;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
@@ -38,7 +39,7 @@ public class AccountController {
                            .email(requestDto.getEmail())
                            .password(requestDto.getPassword())
                            .name(requestDto.getName())
-                           .accountRole(AccountRole.USER)
+                           .accountRoles(Set.of(AccountRole.USER))
                            .build();
     Account newAccount = accountService.createAccount(requestedAccount);
     URI uri = linkTo(AccountController.class).slash(newAccount.getId()).toUri();
