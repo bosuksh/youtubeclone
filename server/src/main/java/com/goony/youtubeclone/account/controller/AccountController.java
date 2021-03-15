@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.Set;
 
@@ -30,11 +31,8 @@ public class AccountController {
   private final AccountService accountService;
 
   @PostMapping
-  public ResponseEntity<?> createAccount(@RequestBody AccountRequestDto requestDto, Errors errors) {
+  public ResponseEntity<?> createAccount(@Valid @RequestBody AccountRequestDto requestDto, Errors errors) {
 
-    if(errors.hasErrors()) {
-      return ResponseEntity.badRequest().build();
-    }
     Account requestedAccount = Account.builder()
                            .email(requestDto.getEmail())
                            .password(requestDto.getPassword())
