@@ -3,7 +3,6 @@ package com.goony.youtubeclone.account.domain;
 import com.goony.youtubeclone.common.domain.BaseEntity;
 import com.sun.istack.NotNull;
 import lombok.*;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -16,7 +15,6 @@ import java.util.Set;
 public class Account extends BaseEntity {
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @NotBlank
   private Long id;
 
   @Column(unique = true)
@@ -27,6 +25,8 @@ public class Account extends BaseEntity {
   private String password;
 
   private String name;
+
+  private String token;
 
   @ElementCollection(fetch = FetchType.EAGER)
   @Enumerated(value = EnumType.STRING)
