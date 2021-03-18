@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,12 +28,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 public class AccountController {
 
   private final AccountService accountService;
+  private final PasswordEncoder passwordEncoder;
 
   @PostMapping
   public ResponseEntity<?> createAccount(@RequestBody @Valid AccountRequestDto requestDto) {
     Account requestedAccount = Account.builder()
                            .email(requestDto.getEmail())
-                           .password(requestDto.getPassword())
+                           .password(passwordEncoder.encode(requestDto.getPassword()))
                            .name(requestDto.getName())
                            .accountRoles(Set.of(AccountRole.USER))
                            .build();
