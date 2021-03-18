@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +22,11 @@ public class AuthenticationController {
 
   private final JwtTokenProvider jwtTokenProvider;
   private final AuthenticationManager authenticationManager;
+  private final PasswordEncoder passwordEncoder;
 
   @PostMapping
   public ResponseEntity<?> signIn(@RequestBody AuthRequestDto requestDto) {
-    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(requestDto.getEmail(), requestDto.getPassword()));
+    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(requestDto.getEmail(), passwordEncoder.encode(requestDto.getPassword())));
     return ResponseEntity.ok(jwtTokenProvider.createToken(requestDto.getEmail(), Set.of(AccountRole.USER)));
   }
 
