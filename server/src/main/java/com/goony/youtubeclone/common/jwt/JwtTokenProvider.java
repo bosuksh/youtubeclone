@@ -1,5 +1,6 @@
 package com.goony.youtubeclone.common.jwt;
 
+import com.goony.youtubeclone.account.domain.AccountRole;
 import com.goony.youtubeclone.account.service.AccountService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -15,7 +16,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 //추가된 라이브러리를 사용해서 JWT를 생성하고 검증하는 컴포넌트
 //JWT에는 토큰 만료 시간이나 회원 권한 정보등을 저장
@@ -24,7 +25,7 @@ import java.util.List;
 @Component
 public class JwtTokenProvider {
 
-  private String secretKey = "secretKey설정";
+  private String secretKey = "jwtSecret";
 
   // 토큰 유효시간 30분
   private long tokenValidTime = 30 * 60 * 1000L;
@@ -38,7 +39,7 @@ public class JwtTokenProvider {
   }
 
   // JWT 토큰 생성
-  public String createToken(String userPk, List<String> roles) {
+  public String createToken(String userPk, Set<AccountRole> roles) {
     Claims claims = Jwts.claims().setSubject(userPk);
     // claim : JWT payload 에 저장되는 정보단위
     claims.put("roles", roles); // 정보는 key / value 쌍으로 저장
