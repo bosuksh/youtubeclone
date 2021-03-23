@@ -2,6 +2,7 @@ package com.goony.youtubeclone.account.controller;
 
 import com.goony.youtubeclone.account.domain.AccountRole;
 import com.goony.youtubeclone.account.dto.AuthRequestDto;
+import com.goony.youtubeclone.account.dto.AuthResponseDto;
 import com.goony.youtubeclone.common.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,8 @@ public class AuthenticationController {
 
   @PostMapping
   public ResponseEntity<?> signIn(@RequestBody AuthRequestDto requestDto) {
-    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(requestDto.getEmail(), passwordEncoder.encode(requestDto.getPassword())));
-    return ResponseEntity.ok(jwtTokenProvider.createToken(requestDto.getEmail(), Set.of(AccountRole.USER)));
+    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(requestDto.getEmail(), requestDto.getPassword()));
+    return ResponseEntity.ok(new AuthResponseDto(jwtTokenProvider.createToken(requestDto.getEmail(), Set.of(AccountRole.USER))));
   }
 
 
